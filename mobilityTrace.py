@@ -5,8 +5,6 @@ import ns.network
 import ns.csma
 
 def main(argv):
-print "hello"
-'''
     cmd = ns.core.CommandLine()
     cmd.backboneNodes = 10
     cmd.AddValue("backboneNodes","number of backbone nodes")
@@ -38,7 +36,3 @@ print "hello"
     ns.core.Simulator.Stop(ns.core.Seconds(20))
     ns.core.Simulator.Run()
     ns.core.Simulator.Destroy()
-
-import sys
-main(sys.argv)
-'''
