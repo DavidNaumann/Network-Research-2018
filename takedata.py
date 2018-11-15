@@ -97,7 +97,6 @@ for time in range(totalruns):
 time = 0
 G_disweight = []
 G_adj = []
-print adjMatrix[0]
 for time in range(totalruns):
     G_disweight.append(nx.from_numpy_matrix(np.matrix(disMatrix[time])))
     G_adj.append(nx.from_numpy_matrix(np.matrix(adjMatrix[time])))
