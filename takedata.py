@@ -1,6 +1,15 @@
 import numpy as np
 import networkx as nx
+import ns.applications
+import ns.core
+import ns.mobility
+import ns.network
+import ns.csma
+import sys
+from mobilityTrace import main
 
+main(sys.argv)
+'''
 def distance(x1,x2,y1,y2):
     dis = np.sqrt(np.power((x1-x2),2)+np.power((y1-y2),2))
     return dis
@@ -93,3 +102,4 @@ for time in range(totalruns):
     G_disweight.append(nx.from_numpy_matrix(np.matrix(disMatrix[time])))
     G_adj.append(nx.from_numpy_matrix(np.matrix(adjMatrix[time])))
     print nx.algebraic_connectivity(G_adj[time], weight='weight', normalized=False, tol=1e-08, method='tracemin_pcg')
+'''

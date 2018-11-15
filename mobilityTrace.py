@@ -5,7 +5,8 @@ import ns.network
 import ns.csma
 
 def main(argv):
-
+print "hello"
+'''
     cmd = ns.core.CommandLine()
     cmd.backboneNodes = 10
     cmd.AddValue("backboneNodes","number of backbone nodes")
@@ -40,3 +41,4 @@ def main(argv):
 
 import sys
 main(sys.argv)
+'''
