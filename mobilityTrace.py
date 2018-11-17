@@ -4,9 +4,9 @@ import ns.mobility
 import ns.network
 import ns.csma
 
-def main(argv):
+def main(argv,nodes):
     cmd = ns.core.CommandLine()
-    cmd.backboneNodes = 10
+    cmd.backboneNodes = nodes
     cmd.AddValue("backboneNodes","number of backbone nodes")
     cmd.Parse(argv)
 
@@ -33,6 +33,6 @@ def main(argv):
     ascii = ns.network.AsciiTraceHelper();
     mobility.EnableAsciiAll(ascii.CreateFileStream("mobility-trace.mob"));
 
-    ns.core.Simulator.Stop(ns.core.Seconds(20))
+    ns.core.Simulator.Stop(ns.core.Seconds(10))
     ns.core.Simulator.Run()
     ns.core.Simulator.Destroy()
