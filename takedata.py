@@ -6,16 +6,18 @@ import ns.mobility
 import ns.network
 import ns.csma
 import sys
-from mobilityTrace import siumulate
+from mobilityTrace import simulate
 from functions import *
 
 
 
-tXrange = 8 # Transmission range in meters
-tRuns = 5  # Total runs
+tXrange = 4 # Transmission range in meters
+Stime = 2 # Time in seconds
+tRuns = 2  # Total runs
 nNodes = 3 # number of nodes
-for runs in range(1,tRuns):
-    simulate(sys.argv,nNodes)
+deltaTime = 1 # in seconds
+for runs in range(0,tRuns):
+    simulate(sys.argv,nNodes,Stime,deltaTime)
     # File variable
     file = open("mobility-trace.mob", "r")
     # Lines in file
@@ -89,7 +91,7 @@ for runs in range(1,tRuns):
     G_adj = []
 
     """
-    Data organization:
+    Data pack organization:
     data[time][selection]
     selection:
         0: current time
@@ -103,9 +105,19 @@ for runs in range(1,tRuns):
 
     """
     selection_name = ["Time","Algebraic Connectivity","Average Clustering","Closeness","Degree Centrality","Edge Betweenness","Node Betweeness"]
+    if runs==0:
+        counter = 0
+        adj_data_pack = []
+        disweight_data_pack = []
+        for item in final[0]:
+            adj_data_pack.append([])
+            disweight_data_pack.append([])
+            adj_data_pack[counter].append(item[0])
+            disweight_data_pack[counter].append(item[0])
+            adj_data_pack[counter].append([])
+            disweight_data_pack[counter].append([])
+            counter = counter + 1
     for time in range(totalruns):
-        G_disweight.append(nx.from_numpy_matrix(np.matrix(disMatrix[time])))
-        G_adj.append(nx.from_numpy_matrix(np.matrix(adjMatrix[time])))
-        print nx.algebraic_connectivity(G_adj[time], weight='weight', normalized=False, tol=1e-08, method='tracemin_pcg')
+        data_pack_define(adj_data_pack,disweight_data_pack,disMatrix[time],adjMatrix[time],time,runs)
 
-print adjMatrix[1]
+print adj_data_pack

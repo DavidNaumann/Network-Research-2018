@@ -56,3 +56,48 @@ def matriceMaker(adjMatrix,disMatrix,final,tXrange,topnode,totalruns):
                 else:
                     disMatrix[time][x].append(connection*dis)
     return
+
+"""
+    Data pack organization:
+    data[time][selection]
+    selection:
+        0: current time
+        1: array of algebraic_connectivity
+        2: array of average_clustering
+        3: array of closeness
+        4: array of degree_centrality
+        5: edge_betweenness
+        6: node_betweenness
+    [[time,[algebraic_connectivity],[average_clustering],[closeness],[degree_centrality],[node_betweenness],[edge_betweenness]]
+
+"""
+
+def data_pack_define(adj_data_pack,disweight_data_pack,disMatrix,adjMatrix,time,runs):
+    G_disweight = nx.from_numpy_matrix(np.matrix(disMatrix))
+    G_adj = nx.from_numpy_matrix(np.matrix(adjMatrix))
+    no_nodes = len(G_adj)
+    no_edges = G_adj.size()
+    norm_alg_con = nx.algebraic_connectivity(G_adj, weight='weight', normalized=False, tol=1e-08, method='tracemin_pcg')
+    norm_avg_clu = nx.average_clustering(G_adj,weight='weight')
+    norm_closeness = np.mean(list(nx.closeness_centrality(G_adj,u=None,distance='weight')))
+    norm_deg = np.mean(list(nx.degree_centrality(G_adj).values()))
+    if no_nodes >= 1:
+        norm_n_betweenness = np.mean(list(nx.betweenness_centrality(G_adj,normalized=True,weight='weight').values()))
+    else:
+        norm_n_betweenness = 0
+    if no_edges >= 1:
+        norm_e_betweenness = np.mean(list(nx.edge_betweenness_centrality(G_adj, normalized=True, weight='weight').values()))
+    else:
+        norm_e_betweenness = 0
+    norm_arr = [norm_alg_con,norm_avg_clu,norm_closeness,norm_deg,norm_n_betweenness,norm_e_betweenness]
+    counter = 0
+    if runs == 0:
+        for items in norm_arr:
+            adj_data_pack[time][1].append([])
+            adj_data_pack[time][1][counter].append(norm_arr[counter])
+            counter = counter + 1
+    else:
+        for items in norm_arr:
+            adj_data_pack[time][1][counter].append(norm_arr[counter])
+            counter = counter + 1
+    return

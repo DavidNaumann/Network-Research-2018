@@ -4,7 +4,7 @@ import ns.mobility
 import ns.network
 import ns.csma
 
-def simulate(argv,nodes):
+def simulate(argv,nodes,time,deltaTime):
     cmd = ns.core.CommandLine()
     cmd.backboneNodes = nodes
     cmd.AddValue("backboneNodes","number of backbone nodes")
@@ -24,7 +24,7 @@ def simulate(argv,nodes):
                                  "LayoutType", ns.core.StringValue ("RowFirst"))
     mobility.SetMobilityModel("ns3::RandomWalk2dMobilityModel",
                              "Mode", ns.core.StringValue ("Time"),
-                             "Time", ns.core.StringValue ("1s"),
+                             "Time", ns.core.StringValue (str(deltaTime)+"s"),
                              "Speed", ns.core.StringValue ("ns3::ConstantRandomVariable[Constant=1.0]"),
                              "Bounds", ns.mobility.RectangleValue (ns.mobility.Rectangle (0.0, 20.0, 0.0, 20.0)))
     mobility.Install(backbone)
@@ -33,6 +33,6 @@ def simulate(argv,nodes):
     ascii = ns.network.AsciiTraceHelper();
     mobility.EnableAsciiAll(ascii.CreateFileStream("mobility-trace.mob"));
 
-    ns.core.Simulator.Stop(ns.core.Seconds(10))
+    ns.core.Simulator.Stop(ns.core.Seconds(time))
     ns.core.Simulator.Run()
     ns.core.Simulator.Destroy()
