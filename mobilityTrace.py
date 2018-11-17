@@ -4,7 +4,7 @@ import ns.mobility
 import ns.network
 import ns.csma
 
-def main(argv,nodes):
+def simulate(argv,nodes):
     cmd = ns.core.CommandLine()
     cmd.backboneNodes = nodes
     cmd.AddValue("backboneNodes","number of backbone nodes")

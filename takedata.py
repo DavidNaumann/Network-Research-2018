@@ -6,7 +6,7 @@ import ns.mobility
 import ns.network
 import ns.csma
 import sys
-from mobilityTrace import main
+from mobilityTrace import siumulate
 from functions import *
 
 
@@ -15,7 +15,7 @@ tXrange = 8 # Transmission range in meters
 tRuns = 5  # Total runs
 nNodes = 3 # number of nodes
 for runs in range(1,tRuns):
-    main(sys.argv,nNodes)
+    simulate(sys.argv,nNodes)
     # File variable
     file = open("mobility-trace.mob", "r")
     # Lines in file
